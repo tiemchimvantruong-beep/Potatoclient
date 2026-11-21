@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "potatoclient",
+  "version": "${version}",
+  "name": "Potato Client",
+  "description": "A client-side ClickGUI and configurable module dashboard.",
+  "authors": ["Potato"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.potato.client.PotatoClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "=1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
