@@ -3,6 +3,7 @@ package com.potato.client.gui;
 import com.potato.client.ClientModule;
 import com.potato.client.ModuleRegistry;
 import com.potato.client.PotatoConfig;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -75,7 +76,10 @@ public final class PotatoClickGuiScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(Click click, boolean doubled) {
+        double mouseX = click.x();
+        double mouseY = click.y();
+        int button = click.button();
         if (button == 0 && mouseY >= panelY && mouseY <= panelY + 42 && mouseX >= panelX && mouseX <= panelX + panelWidth) {
             dragging = true;
             dragOffsetX = (int) mouseX - panelX;
@@ -110,24 +114,27 @@ public final class PotatoClickGuiScreen extends Screen {
                 shown++;
             }
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(click, doubled);
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+    public boolean mouseDragged(Click click, double deltaX, double deltaY) {
+        double mouseX = click.x();
+        double mouseY = click.y();
+        int button = click.button();
         if (dragging && button == 0) {
             panelX = Math.max(0, Math.min(width - panelWidth, (int) mouseX - dragOffsetX));
             panelY = Math.max(0, Math.min(height - panelHeight, (int) mouseY - dragOffsetY));
             if (search != null) search.setPosition(panelX + 14, panelY + 72);
             return true;
         }
-        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        return super.mouseDragged(click, deltaX, deltaY);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        if (button == 0) dragging = false;
-        return super.mouseReleased(mouseX, mouseY, button);
+    public boolean mouseReleased(Click click) {
+        if (click.button() == 0) dragging = false;
+        return super.mouseReleased(click);
     }
 
     @Override
